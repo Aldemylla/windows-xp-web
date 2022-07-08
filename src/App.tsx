@@ -1,11 +1,5 @@
 function App() {
-  return (
-    <div className='App'>
-      <img src='/assets/acessories-calculator.svg' alt='' />
-      <p>Home</p>
-    </div>
-  );
+  return <div className='App'></div>;
 }
 
 export default App;
-

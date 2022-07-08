@@ -1,13 +1,19 @@
+@font-face {
+  font-family: "Tahoma";
+  src: url("./assets/fonts/Tahoma_8px_Regular.ttf");
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Tahoma", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.App {
+  width: 100vw;
+  height: 100vh;
+  background: url("./assets/images/wallpaper.jpg") no-repeat;
+  background-size: cover;
 }
+
