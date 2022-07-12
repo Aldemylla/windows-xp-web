@@ -1,0 +1,64 @@
+.taskbar {
+  width: 100vw;
+  height: 5vh;
+
+  position: fixed;
+  bottom: 0;
+
+  display: grid;
+  grid-template-columns: auto 150px;
+
+  &__programs {
+    background: var(--bg-blue);
+    box-shadow: var(--bg-blue-shadow);
+
+    &__start {
+      height: 5vh;
+
+      display: flex;
+      gap: 0.3rem;
+      align-items: center;
+
+      padding: 0.3rem 1.8rem 0.3rem 0.6rem;
+
+      background: var(--bg-green);
+      box-shadow: var(--bg-green-shadow);
+      border-radius: 0% 10% 12% 0%/0% 60% 80% 0%;
+
+      > * {
+        filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.8));
+      }
+
+      > img {
+        width: auto;
+        height: 100%;
+      }
+
+      > span {
+        color: #fff;
+        font-size: 1.2rem;
+        font-style: italic;
+        font-weight: 500;
+      }
+
+      &:hover {
+        background: var(--bg-green-hover);
+        box-shadow: var(--bg-green-shadow-hover);
+      }
+    }
+  }
+  &__tools {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    background: var(--bg-light-blue);
+    box-shadow: var(--bg-light-blue-shadow);
+    border-left: 1px solid #0a2e52;
+
+    > p {
+      color: #fff;
+      font-size: 1.1rem;
+    }
+  }
+}

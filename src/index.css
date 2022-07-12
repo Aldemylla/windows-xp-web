@@ -3,11 +3,39 @@
   src: url("./assets/fonts/Tahoma_8px_Regular.ttf");
 }
 
+:root {
+  --bg-blue: #245edc;
+  --bg-blue-shadow: inset 0 4px 3px #4993e6, inset 0 -2px 3px #173b8b;
+  --bg-light-blue: #0f9eee;
+  --bg-light-blue-shadow: inset 0 4px 3px #19b9f3, inset 0 -2px 3px #095bc9,
+    inset 2px 0 3px #19b9f3;
+  --bg-green: #48ad48;
+  --bg-green-shadow: inset -2px 0px 3px #115f12, inset 1px 0px 2px #418c41,
+    inset 0px -2px 3px #287a3a, inset 0px -12px 6px #369d35,
+    inset 0px 4px 3px #91c092;
+  --bg-green-hover: #4eb84d;
+  --bg-green-shadow-hover: inset -2px 0px 3px #1b6d39, inset 1px 0px 2px #319535,
+    inset 0px -2px 3px #358937, inset 0px -12px 6px #4cc34c,
+    inset 0px 4px 3px #91c092;
+}
+
 body {
   margin: 0;
   font-family: "Tahoma", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+
+  border: 0;
+  outline: 0;
+
+  user-select: none;
 }
 
 .App {
