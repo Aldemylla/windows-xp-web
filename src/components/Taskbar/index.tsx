@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./style.scss";
 
-function Taskbar() {
+export default function Taskbar() {
   const [currentyTime, setCurrentyTime] = useState(getCorrectlyTime());
 
   function getCorrectlyTime() {
@@ -35,5 +35,3 @@ function Taskbar() {
     </div>
   );
 }
-
-export default Taskbar;
