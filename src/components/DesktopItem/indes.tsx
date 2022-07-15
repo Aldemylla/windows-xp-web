@@ -1,5 +1,8 @@
 import iconCalculator from "../../assets/images/program-icons/windows-calculator.jpg";
 import iconEmptyTrash from "../../assets/images/program-icons/empty-trash.png";
+import iconShortcut from "../../assets/images/program-icons/shortcut.ico";
+
+import "./style.scss";
 
 type DesktopItemProps = {
   itemType: "calculator" | "trash";
@@ -21,11 +24,11 @@ export default function DesktopItem({ itemType, shortcut }: DesktopItemProps) {
   const item = itemTypes[itemType];
 
   return (
-    <div>
+    <div className='desktop-item'>
       {shortcut ? (
-        <div>
+        <div className='desktop-item--shortcut'>
           <img src={item.icon} />
-          <img src='' />
+          <img src={iconShortcut} className='shortcut-icon' />
         </div>
       ) : (
         <img src={item.icon} />
