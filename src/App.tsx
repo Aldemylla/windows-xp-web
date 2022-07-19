@@ -1,12 +1,9 @@
-import DesktopItem from "./components/DesktopItem/indes";
-import Taskbar from "./components/Taskbar";
+import Desktop from "./pages/Desktop";
 
 function App() {
   return (
-    <div className='App'>
-      <DesktopItem itemType='calculator' shortcut />
-      <DesktopItem itemType='trash' />
-      <Taskbar />
+    <div className="App">
+      <Desktop />
     </div>
   );
 }

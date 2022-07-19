@@ -1,0 +1,25 @@
+.desktop {
+  height: 100%;
+
+  &-grid {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    height: 100%;
+    align-items: stretch;
+
+    &__frag {
+      width: 90px;
+      height: 90px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      float: left;
+
+      margin: 5px;
+
+      border: 1px solid black;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 .taskbar {
   width: 100vw;
-  height: 5vh;
+  height: 31px;
 
   position: fixed;
   bottom: 0;
@@ -13,7 +13,7 @@
     box-shadow: var(--bg-blue-shadow);
 
     &__start {
-      height: 5vh;
+      height: 31px;
 
       display: flex;
       gap: 0.3rem;
