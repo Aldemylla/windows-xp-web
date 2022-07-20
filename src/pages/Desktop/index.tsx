@@ -30,8 +30,8 @@ function Desktop() {
   }, [screenSize]);
 
   const gridFragsQuantity =
-    Math.floor(screenSize.width / 100) *
-    Math.floor((screenSize.height - 31) / 100);
+    Math.floor(screenSize.width / 80) *
+    Math.floor((screenSize.height - 31) / 80);
 
   const [desktopItems, setDesktopItems] = useState<DesktopItemsList>([
     {
@@ -45,8 +45,8 @@ function Desktop() {
   ]);
 
   return (
-    <div className="desktop">
-      <div className="desktop-grid">
+    <div className='desktop'>
+      <div className='desktop-grid'>
         {[...Array(gridFragsQuantity)].map((deskGridFrag, index) => (
           <DesktopGridFrag
             key={index}

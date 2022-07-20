@@ -2,24 +2,20 @@
   height: 100%;
 
   &-grid {
-    display: flex;
-    justify-content: space-between;
+    height: calc(100% - 31px);
+
+    display: grid;
+    grid-template-rows: repeat(auto-fit, minmax(80px, auto));
+    grid-template-columns: repeat(auto-fit, minmax(80px, auto));
     flex-wrap: wrap;
-    height: 100%;
-    align-items: stretch;
 
     &__frag {
-      width: 90px;
-      height: 90px;
+      width: 100%;
+      height: auto;
 
       display: flex;
       align-items: center;
       justify-content: center;
-      float: left;
-
-      margin: 5px;
-
-      border: 1px solid black;
     }
   }
 }
