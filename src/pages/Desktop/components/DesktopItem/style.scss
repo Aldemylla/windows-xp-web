@@ -7,23 +7,35 @@
   align-items: center;
   justify-content: center;
 
-  img:first-of-type {
-    max-width: 40px;
-    max-height: 40px;
+  &--icon {
+    position: relative;
+
+    img:not(.shortcut) {
+      max-width: 40px;
+      max-height: 40px;
+    }
+
+    img.overlay {
+      position: absolute;
+      inset: 0;
+      filter: brightness(50%) sepia(100) saturate(100) hue-rotate(215deg);
+      opacity: 0.5;
+    }
+
+    .shortcut {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
   }
 
   > p {
     color: #fff;
     filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.6));
-  }
 
-  &--shortcut {
-    position: relative;
-
-    > img.shortcut-icon {
-      position: absolute;
-      bottom: 0;
-      left: 0;
+    &.selected {
+      filter: none;
+      background-color: #245edc;
     }
   }
 }

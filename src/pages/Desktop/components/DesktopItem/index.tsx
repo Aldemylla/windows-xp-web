@@ -8,10 +8,13 @@ import "./style.scss";
 
 type DesktopItemProps = {
   itemType: "calculator" | "trash";
-  shortcut?: boolean;
+  isShortcut?: boolean;
 };
 
-export default function DesktopItem({ itemType, shortcut }: DesktopItemProps) {
+export default function DesktopItem({
+  itemType,
+  isShortcut,
+}: DesktopItemProps) {
   const itemTypes = {
     calculator: {
       icon: iconCalculator,
@@ -23,6 +26,8 @@ export default function DesktopItem({ itemType, shortcut }: DesktopItemProps) {
     },
   };
 
+  const itemSelected = false;
+
   const item = itemTypes[itemType];
 
   const dragItem = useRef<HTMLDivElement>(null);
@@ -33,22 +38,18 @@ export default function DesktopItem({ itemType, shortcut }: DesktopItemProps) {
 
   return (
     <div
-      className="desktop-item"
+      className='desktop-item'
       draggable
       onDragStart={drag}
       ref={dragItem}
-      id={itemType}
-    >
-      {shortcut ? (
-        <div className="desktop-item--shortcut">
-          <img src={item.icon} />
-          <img src={iconShortcut} className="shortcut-icon" />
-        </div>
-      ) : (
+      id={itemType}>
+      <div className='desktop-item--icon'>
         <img src={item.icon} />
-      )}
+        {itemSelected && <img src={item.icon} className='overlay' />}
+        {isShortcut && <img src={iconShortcut} className='shortcut' />}
+      </div>
 
-      <p>{item.title}</p>
+      <p className={itemSelected ? "selected" : ""}>{item.title}</p>
     </div>
   );
 }
