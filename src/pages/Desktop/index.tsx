@@ -1,60 +1,23 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import DesktopGridFrag from "./components/DesktopGridFrag";
 import DesktopTaskbar from "./components/DesktopTaskbar";
+import DesktopContextProvider, {
+  DesktopContext,
+  DesktopContextType,
+} from "./contexts/DesktopContext";
 
 import "./style.scss";
 
-type DesktopItemsList = {
-  item: "calculator" | "trash";
-  index: number;
-}[];
-
-function Desktop() {
-  const [screenSize, setScreeSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-  const setDimension = () => {
-    setScreeSize({
-      width: window.innerWidth,
-      height: window.innerHeight,
-    });
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", setDimension);
-
-    return () => {
-      window.removeEventListener("resize", setDimension);
-    };
-  }, [screenSize]);
-
-  const gridFragsQuantity =
-    Math.floor(screenSize.width / 80) *
-    Math.floor((screenSize.height - 31) / 80);
-
-  const [desktopItems, setDesktopItems] = useState<DesktopItemsList>([
-    {
-      item: "calculator",
-      index: 0,
-    },
-    {
-      item: "trash",
-      index: gridFragsQuantity - 1,
-    },
-  ]);
+function DesktopContainer() {
+  const { gridFragsQuantity } = useContext(
+    DesktopContext
+  ) as DesktopContextType;
 
   return (
     <div className='desktop'>
       <div className='desktop-grid'>
         {[...Array(gridFragsQuantity)].map((deskGridFrag, index) => (
-          <DesktopGridFrag
-            key={index}
-            gridIndex={index}
-            lastGridIndex={gridFragsQuantity - 1}
-            desktopItems={desktopItems}
-            setDesktopItems={setDesktopItems}
-          />
+          <DesktopGridFrag key={index} gridIndex={index} />
         ))}
       </div>
       <DesktopTaskbar />
@@ -62,4 +25,10 @@ function Desktop() {
   );
 }
 
-export default Desktop;
+export default function Desktop() {
+  return (
+    <DesktopContextProvider>
+      <DesktopContainer />
+    </DesktopContextProvider>
+  );
+}

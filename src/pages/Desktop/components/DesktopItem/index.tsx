@@ -4,10 +4,12 @@ import iconCalculator from "../../../../assets/images/program-icons/windows-calc
 import iconEmptyTrash from "../../../../assets/images/program-icons/empty-trash.png";
 import iconShortcut from "../../../../assets/images/program-icons/shortcut.ico";
 
+import { DesktopItemName } from "../../types";
+
 import "./style.scss";
 
 type DesktopItemProps = {
-  itemType: "calculator" | "trash";
+  itemType: DesktopItemName;
   isShortcut?: boolean;
 };
 

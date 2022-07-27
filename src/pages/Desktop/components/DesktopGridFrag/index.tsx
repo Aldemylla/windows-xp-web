@@ -1,37 +1,27 @@
-import {
-  Dispatch,
-  DragEvent,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { DragEvent, useContext, useEffect, useRef, useState } from "react";
 
 import DesktopItem from "../DesktopItem";
 
-type DesktopItem = {
-  item: "calculator" | "trash";
-  index: number;
-};
+import { DesktopItemType } from "../../types";
+import {
+  DesktopContext,
+  DesktopContextType,
+} from "../../contexts/DesktopContext";
 
 type DesktopGridFragProps = {
   gridIndex: number;
-  lastGridIndex: number;
-  desktopItems: DesktopItem[];
-  setDesktopItems: Dispatch<SetStateAction<DesktopItem[]>>;
 };
 
-export default function DesktopGridFrag({
-  gridIndex,
-  lastGridIndex,
-  desktopItems,
-  setDesktopItems,
-}: DesktopGridFragProps) {
+export default function DesktopGridFrag({ gridIndex }: DesktopGridFragProps) {
+  const { desktopItems, setDesktopItems } = useContext(
+    DesktopContext
+  ) as DesktopContextType;
+
   function allowDrop(ev: DragEvent<HTMLDivElement>) {
     ev.preventDefault();
   }
 
-  const [objectDesktopItem, setObjectDesktopItem] = useState<DesktopItem>();
+  const [objectDesktopItem, setObjectDesktopItem] = useState<DesktopItemType>();
 
   useEffect(() => {
     setObjectDesktopItem(desktopItems.find((item) => item.index === gridIndex));
@@ -61,12 +51,11 @@ export default function DesktopGridFrag({
 
   return (
     <div
-      className="desktop-grid__frag"
+      className='desktop-grid__frag'
       ref={dragItem}
       onDrop={drop}
       onDragOver={allowDrop}
-      id={`frag-${gridIndex}`}
-    >
+      id={`frag-${gridIndex}`}>
       {objectDesktopItem && <DesktopItem itemType={objectDesktopItem.item} />}
     </div>
   );
