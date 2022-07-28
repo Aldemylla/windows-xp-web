@@ -9,12 +9,14 @@ import { DesktopItemName } from "../../types";
 import "./style.scss";
 
 type DesktopItemProps = {
-  itemType: DesktopItemName;
+  itemName: DesktopItemName;
+  selected: boolean;
   isShortcut?: boolean;
 };
 
 export default function DesktopItem({
-  itemType,
+  itemName,
+  selected,
   isShortcut,
 }: DesktopItemProps) {
   const itemTypes = {
@@ -27,10 +29,7 @@ export default function DesktopItem({
       title: "Lixeira",
     },
   };
-
-  const itemSelected = false;
-
-  const item = itemTypes[itemType];
+  const item = itemTypes[itemName];
 
   const dragItem = useRef<HTMLDivElement>(null);
 
@@ -42,16 +41,16 @@ export default function DesktopItem({
     <div
       className='desktop-item'
       draggable
-      onDragStart={drag}
       ref={dragItem}
-      id={itemType}>
+      onDragStart={drag}
+      id={itemName}>
       <div className='desktop-item--icon'>
         <img src={item.icon} />
-        {itemSelected && <img src={item.icon} className='overlay' />}
+        {selected && <img src={item.icon} className='overlay' />}
         {isShortcut && <img src={iconShortcut} className='shortcut' />}
       </div>
 
-      <p className={itemSelected ? "selected" : ""}>{item.title}</p>
+      <p className={selected ? "selected" : ""}>{item.title}</p>
     </div>
   );
 }

@@ -13,9 +13,12 @@ type DesktopGridFragProps = {
 };
 
 export default function DesktopGridFrag({ gridIndex }: DesktopGridFragProps) {
-  const { desktopItems, setDesktopItems } = useContext(
-    DesktopContext
-  ) as DesktopContextType;
+  const {
+    desktopItems,
+    setDesktopItems,
+    selectedDesktopItem,
+    setSelectedDesktopItem,
+  } = useContext(DesktopContext) as DesktopContextType;
 
   function allowDrop(ev: DragEvent<HTMLDivElement>) {
     ev.preventDefault();
@@ -49,14 +52,24 @@ export default function DesktopGridFrag({ gridIndex }: DesktopGridFragProps) {
     ev.dataTransfer.clearData();
   }
 
+  function selectItemHandler() {
+    setSelectedDesktopItem(objectDesktopItem?.item || "");
+  }
+
   return (
     <div
+      id={`frag-${gridIndex}`}
       className='desktop-grid__frag'
       ref={dragItem}
       onDrop={drop}
       onDragOver={allowDrop}
-      id={`frag-${gridIndex}`}>
-      {objectDesktopItem && <DesktopItem itemType={objectDesktopItem.item} />}
+      onClick={selectItemHandler}>
+      {objectDesktopItem && (
+        <DesktopItem
+          itemName={objectDesktopItem.item}
+          selected={selectedDesktopItem === objectDesktopItem.item}
+        />
+      )}
     </div>
   );
 }

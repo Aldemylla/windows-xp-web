@@ -7,18 +7,22 @@ import {
   useState,
 } from "react";
 
-import { DesktopItemType } from "../types";
+import { DesktopItemName, DesktopItemType } from "../types";
 
 export type DesktopContextType = {
   gridFragsQuantity: number;
   desktopItems: DesktopItemType[];
   setDesktopItems: Dispatch<SetStateAction<DesktopItemType[]>>;
+  selectedDesktopItem: DesktopItemName | "";
+  setSelectedDesktopItem: Dispatch<SetStateAction<DesktopItemName | "">>;
 };
 
 const desktopContextDefault = {
   gridFragsQuantity: 0,
   desktopItems: [],
   setDesktopItems: () => {},
+  selectedDesktopItem: "",
+  setSelectedDesktopItem: () => {},
 };
 
 export const DesktopContext = createContext<DesktopContextType>(
@@ -64,9 +68,19 @@ export default function DesktopContextProvider({
     },
   ]);
 
+  const [selectedDesktopItem, setSelectedDesktopItem] = useState<
+    DesktopItemName | ""
+  >("");
+
   return (
     <DesktopContext.Provider
-      value={{ gridFragsQuantity, desktopItems, setDesktopItems }}>
+      value={{
+        gridFragsQuantity,
+        desktopItems,
+        setDesktopItems,
+        selectedDesktopItem,
+        setSelectedDesktopItem,
+      }}>
       {children}
     </DesktopContext.Provider>
   );
