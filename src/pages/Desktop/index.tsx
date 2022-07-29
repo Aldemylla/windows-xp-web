@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import DesktopApp from "./components/DesktopApp";
 import DesktopGridFrag from "./components/DesktopGridFrag";
 import DesktopTaskbar from "./components/DesktopTaskbar";
 import DesktopContextProvider, {
@@ -9,7 +10,7 @@ import DesktopContextProvider, {
 import "./style.scss";
 
 function DesktopContainer() {
-  const { gridFragsQuantity } = useContext(
+  const { gridFragsQuantity, openedDesktopApps } = useContext(
     DesktopContext
   ) as DesktopContextType;
 
@@ -18,6 +19,9 @@ function DesktopContainer() {
       <div className='desktop-grid'>
         {[...Array(gridFragsQuantity)].map((deskGridFrag, index) => (
           <DesktopGridFrag key={index} gridIndex={index} />
+        ))}
+        {openedDesktopApps.map((app, index) => (
+          <DesktopApp key={index} app={app} />
         ))}
       </div>
       <DesktopTaskbar />

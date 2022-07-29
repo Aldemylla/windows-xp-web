@@ -66,7 +66,7 @@ export default function DesktopGridFrag({ gridIndex }: DesktopGridFragProps) {
       onClick={selectItemHandler}>
       {objectDesktopItem && (
         <DesktopItem
-          itemName={objectDesktopItem.item}
+          itemObj={objectDesktopItem}
           selected={selectedDesktopItem === objectDesktopItem.item}
         />
       )}

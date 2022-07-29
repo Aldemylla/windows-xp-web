@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 
-import { DesktopItemName, DesktopItemType } from "../types";
+import { DesktopItemName, DesktopItemType, DesktopAppType } from "../types";
 
 export type DesktopContextType = {
   gridFragsQuantity: number;
@@ -15,6 +15,8 @@ export type DesktopContextType = {
   setDesktopItems: Dispatch<SetStateAction<DesktopItemType[]>>;
   selectedDesktopItem: DesktopItemName | "";
   setSelectedDesktopItem: Dispatch<SetStateAction<DesktopItemName | "">>;
+  openedDesktopApps: DesktopAppType[];
+  setOpenedDesktopApps: Dispatch<SetStateAction<DesktopAppType[]>>;
 };
 
 const desktopContextDefault = {
@@ -23,6 +25,8 @@ const desktopContextDefault = {
   setDesktopItems: () => {},
   selectedDesktopItem: "",
   setSelectedDesktopItem: () => {},
+  openedDesktopApps: [],
+  setOpenedDesktopApps: () => {},
 };
 
 export const DesktopContext = createContext<DesktopContextType>(
@@ -72,6 +76,10 @@ export default function DesktopContextProvider({
     DesktopItemName | ""
   >("");
 
+  const [openedDesktopApps, setOpenedDesktopApps] = useState<DesktopAppType[]>(
+    []
+  );
+
   return (
     <DesktopContext.Provider
       value={{
@@ -80,6 +88,8 @@ export default function DesktopContextProvider({
         setDesktopItems,
         selectedDesktopItem,
         setSelectedDesktopItem,
+        openedDesktopApps,
+        setOpenedDesktopApps,
       }}>
       {children}
     </DesktopContext.Provider>
