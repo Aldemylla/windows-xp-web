@@ -1,11 +1,16 @@
-export type DesktopItemName = "calculator" | "trash";
+export type DesktopItemId = "calculator" | "trash";
+export type DesktopItemTitle = "Calculadora" | "Lixeira";
 
 export type DesktopItemType = {
-  item: DesktopItemName;
+  id: DesktopItemId;
+  title: DesktopItemTitle;
+  icon: string;
   index: number;
 };
 
 export type DesktopAppType = {
-  item: DesktopItemName;
+  id: DesktopItemId;
+  title: DesktopItemTitle;
+  icon: string;
   state: "closed" | "opened" | "maximized" | "minimized" | "unfocused";
 };

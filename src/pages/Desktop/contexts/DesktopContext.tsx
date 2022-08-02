@@ -7,14 +7,17 @@ import {
   useState,
 } from "react";
 
-import { DesktopItemName, DesktopItemType, DesktopAppType } from "../types";
+import iconCalculator from "../../../assets/images/program-icons/windows-calculator.png";
+import iconEmptyTrash from "../../../assets/images/program-icons/empty-trash.png";
+
+import { DesktopItemId, DesktopItemType, DesktopAppType } from "../types";
 
 export type DesktopContextType = {
   gridFragsQuantity: number;
   desktopItems: DesktopItemType[];
   setDesktopItems: Dispatch<SetStateAction<DesktopItemType[]>>;
-  selectedDesktopItem: DesktopItemName | "";
-  setSelectedDesktopItem: Dispatch<SetStateAction<DesktopItemName | "">>;
+  selectedDesktopItem: DesktopItemId | "";
+  setSelectedDesktopItem: Dispatch<SetStateAction<DesktopItemId | "">>;
   openedDesktopApps: DesktopAppType[];
   setOpenedDesktopApps: Dispatch<SetStateAction<DesktopAppType[]>>;
 };
@@ -63,17 +66,21 @@ export default function DesktopContextProvider({
 
   const [desktopItems, setDesktopItems] = useState<DesktopItemType[]>([
     {
-      item: "calculator",
+      id: "calculator",
+      title: "Calculadora",
+      icon: iconCalculator,
       index: 0,
     },
     {
-      item: "trash",
+      id: "trash",
+      title: "Lixeira",
+      icon: iconEmptyTrash,
       index: gridFragsQuantity - 1,
     },
   ]);
 
   const [selectedDesktopItem, setSelectedDesktopItem] = useState<
-    DesktopItemName | ""
+    DesktopItemId | ""
   >("");
 
   const [openedDesktopApps, setOpenedDesktopApps] = useState<DesktopAppType[]>(

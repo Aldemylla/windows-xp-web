@@ -1,8 +1,6 @@
 import { DragEvent, useContext, useRef } from "react";
 import { DesktopContext } from "../../contexts/DesktopContext";
 
-import iconCalculator from "../../../../assets/images/program-icons/windows-calculator.jpg";
-import iconEmptyTrash from "../../../../assets/images/program-icons/empty-trash.png";
 import iconShortcut from "../../../../assets/images/program-icons/shortcut.ico";
 
 import { DesktopAppType, DesktopItemType } from "../../types";
@@ -10,28 +8,16 @@ import { DesktopAppType, DesktopItemType } from "../../types";
 import "./style.scss";
 
 type DesktopItemProps = {
-  itemObj: DesktopItemType;
+  item: DesktopItemType;
   selected: boolean;
   isShortcut?: boolean;
 };
 
 export default function DesktopItem({
-  itemObj,
+  item,
   selected,
   isShortcut,
 }: DesktopItemProps) {
-  const itemTypes = {
-    calculator: {
-      icon: iconCalculator,
-      title: "Calculadora",
-    },
-    trash: {
-      icon: iconEmptyTrash,
-      title: "Lixeira",
-    },
-  };
-  const item = itemTypes[itemObj.item];
-
   const { openedDesktopApps, setOpenedDesktopApps } =
     useContext(DesktopContext);
   const dragItem = useRef<HTMLDivElement>(null);
@@ -42,7 +28,9 @@ export default function DesktopItem({
 
   function openDesktopApp() {
     const newItem: DesktopAppType = {
-      item: itemObj.item,
+      id: item.id,
+      title: item.title,
+      icon: item.icon,
       state: "opened",
     };
     setOpenedDesktopApps([...openedDesktopApps, newItem]);
@@ -55,7 +43,7 @@ export default function DesktopItem({
       ref={dragItem}
       onDragStart={drag}
       onDoubleClick={openDesktopApp}
-      id={itemObj.item}>
+      id={item.id}>
       <div className='desktop-item--icon'>
         <img src={item.icon} />
         {selected && <img src={item.icon} className='overlay' />}

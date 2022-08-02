@@ -35,15 +35,25 @@ export default function DesktopGridFrag({ gridIndex }: DesktopGridFragProps) {
   function drop(ev: DragEvent<HTMLDivElement>) {
     ev.preventDefault();
 
-    if (!objectDesktopItem) {
-      const data = ev.dataTransfer.getData("text") as "calculator" | "trash";
+    const draggableId = ev.dataTransfer.getData("text") as
+      | "calculator"
+      | "trash";
 
-      const newDesktopItems = desktopItems.filter((item) => item.item !== data);
+    const dragItemObj = desktopItems.filter(
+      (item) => item.id === draggableId
+    )[0];
+
+    if (!objectDesktopItem && !!dragItemObj) {
+      const newDesktopItems = desktopItems.filter(
+        (item) => item.id !== draggableId
+      );
 
       setDesktopItems([
         ...newDesktopItems,
         {
-          item: data,
+          id: draggableId,
+          title: dragItemObj.title,
+          icon: dragItemObj.icon,
           index: gridIndex,
         },
       ]);
@@ -53,7 +63,7 @@ export default function DesktopGridFrag({ gridIndex }: DesktopGridFragProps) {
   }
 
   function selectItemHandler() {
-    setSelectedDesktopItem(objectDesktopItem?.item || "");
+    setSelectedDesktopItem(objectDesktopItem?.id || "");
   }
 
   return (
@@ -66,8 +76,8 @@ export default function DesktopGridFrag({ gridIndex }: DesktopGridFragProps) {
       onClick={selectItemHandler}>
       {objectDesktopItem && (
         <DesktopItem
-          itemObj={objectDesktopItem}
-          selected={selectedDesktopItem === objectDesktopItem.item}
+          item={objectDesktopItem}
+          selected={selectedDesktopItem === objectDesktopItem.id}
         />
       )}
     </div>

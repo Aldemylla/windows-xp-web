@@ -1,0 +1,72 @@
+.desktop__app {
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 5px;
+
+    background: #0055e5;
+    box-shadow: inset -2px 0px 3px #001590, inset 1px 0px 2px #0028c4,
+      inset 0px -2px 3px #013ebf, inset 0px -12px 6px #026afe,
+      inset 0px 4px 3px #3897ff;
+    border-radius: 8px 8px 0px 0px;
+
+    cursor: default;
+
+    .title__container {
+      min-width: 35%;
+
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 20px;
+        height: 20px;
+
+        pointer-events: none;
+      }
+
+      h1 {
+        font-size: 1.1rem;
+        font-weight: 400;
+        letter-spacing: 0.03rem;
+        color: #fff;
+        filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.6));
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .window-handlers {
+      display: flex;
+      gap: 2px;
+
+      button {
+        display: flex;
+        align-items: center;
+
+        background: transparent;
+
+        img {
+          pointer-events: none;
+        }
+      }
+    }
+  }
+
+  main {
+    height: calc(100% - 31px);
+
+    background: #ece9d8;
+
+    border: 1px solid;
+    box-shadow: inset 2px 0px 0px #0732d9, inset -2px -2px 2px #00138c;
+
+    overflow: hidden;
+
+    cursor: default;
+  }
+}

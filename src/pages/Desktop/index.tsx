@@ -15,7 +15,7 @@ function DesktopContainer() {
   ) as DesktopContextType;
 
   return (
-    <div className='desktop'>
+    <main className='desktop'>
       <div className='desktop-grid'>
         {[...Array(gridFragsQuantity)].map((deskGridFrag, index) => (
           <DesktopGridFrag key={index} gridIndex={index} />
@@ -25,7 +25,7 @@ function DesktopContainer() {
         ))}
       </div>
       <DesktopTaskbar />
-    </div>
+    </main>
   );
 }
 
