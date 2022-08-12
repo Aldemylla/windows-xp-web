@@ -1,4 +1,4 @@
-import { DragEvent, useContext, useRef } from "react";
+import { DragEvent, useContext, useEffect, useRef, useState } from "react";
 import { DesktopContext } from "../../contexts/DesktopContext";
 
 import iconShortcut from "../../../../assets/images/program-icons/shortcut.ico";
@@ -18,7 +18,7 @@ export default function DesktopItem({
   selected,
   isShortcut,
 }: DesktopItemProps) {
-  const { openedDesktopApps, setOpenedDesktopApps } =
+  const { openedDesktopApps, setOpenedDesktopApps, selectIcons } =
     useContext(DesktopContext);
   const dragItem = useRef<HTMLDivElement>(null);
 
@@ -36,6 +36,30 @@ export default function DesktopItem({
     setOpenedDesktopApps([...openedDesktopApps, newItem]);
   }
 
+  const [isSelected, setIsSelected] = useState(false);
+
+  useEffect(() => {
+    let rect = dragItem.current?.getBoundingClientRect();
+
+    if (rect && selectIcons && selectIcons.currentPos && selectIcons.startPos) {
+      const currentPos = selectIcons.currentPos;
+      const startPos = selectIcons.startPos;
+
+      const sx = Math.min(startPos.x, currentPos.x);
+      const sy = Math.min(startPos.y, currentPos.y);
+      const sw = Math.abs(startPos.x - currentPos.x);
+      const sh = Math.abs(startPos.y - currentPos.y);
+
+      const { x, y, width, height } = rect;
+
+      if (x - sx < sw && sx - x < width && y - sy < sh && sy - y < height) {
+        setIsSelected(true);
+      } else {
+        setIsSelected(false);
+      }
+    }
+  }, [selectIcons]);
+
   return (
     <div
       className='desktop-item'
@@ -46,11 +70,13 @@ export default function DesktopItem({
       id={item.id}>
       <div className='desktop-item--icon'>
         <img src={item.icon} />
-        {selected && <img src={item.icon} className='overlay' />}
+        {(selected || isSelected) && (
+          <img src={item.icon} className='overlay' />
+        )}
         {isShortcut && <img src={iconShortcut} className='shortcut' />}
       </div>
 
-      <p className={selected ? "selected" : ""}>{item.title}</p>
+      <p className={selected || isSelected ? "selected" : ""}>{item.title}</p>
     </div>
   );
 }

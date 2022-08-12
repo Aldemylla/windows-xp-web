@@ -4,13 +4,21 @@ import {
   ReactNode,
   SetStateAction,
   useEffect,
+  useReducer,
   useState,
 } from "react";
 
 import iconCalculator from "../../../assets/images/program-icons/windows-calculator.png";
 import iconEmptyTrash from "../../../assets/images/program-icons/empty-trash.png";
 
-import { DesktopItemId, DesktopItemType, DesktopAppType } from "../types";
+import {
+  DesktopItemId,
+  DesktopItemType,
+  DesktopAppType,
+  StateSelectIcons,
+  ActionSelectIcons,
+  MouseCordsSelectIcons,
+} from "../types";
 
 export type DesktopContextType = {
   gridFragsQuantity: number;
@@ -20,6 +28,8 @@ export type DesktopContextType = {
   setSelectedDesktopItem: Dispatch<SetStateAction<DesktopItemId | "">>;
   openedDesktopApps: DesktopAppType[];
   setOpenedDesktopApps: Dispatch<SetStateAction<DesktopAppType[]>>;
+  selectIcons: StateSelectIcons;
+  dispatchSelectIcons: Dispatch<ActionSelectIcons>;
 };
 
 const desktopContextDefault = {
@@ -30,9 +40,12 @@ const desktopContextDefault = {
   setSelectedDesktopItem: () => {},
   openedDesktopApps: [],
   setOpenedDesktopApps: () => {},
+  selectIcons: {},
+  dispatchSelectIcons: () => {},
 };
 
 export const DesktopContext = createContext<DesktopContextType>(
+  // @ts-ignore: Incompatible type error
   desktopContextDefault
 );
 
@@ -41,6 +54,31 @@ export default function DesktopContextProvider({
 }: {
   children: ReactNode;
 }) {
+  const initialStateSelectIcons = {
+    startPos: null as MouseCordsSelectIcons,
+    currentPos: null as MouseCordsSelectIcons,
+  };
+  function reducerSelectIcons(
+    state: StateSelectIcons,
+    action: ActionSelectIcons
+  ) {
+    switch (action.type) {
+      case "start_select":
+        return { ...state, startPos: action.payload };
+      case "update_pos":
+        return { ...state, currentPos: action.payload };
+      case "end_select":
+        return initialStateSelectIcons;
+
+      default:
+        throw new Error(`Unknown action type`);
+    }
+  }
+  const [selectIcons, dispatchSelectIcons] = useReducer(
+    reducerSelectIcons,
+    initialStateSelectIcons
+  );
+
   const [screenSize, setScreeSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -51,7 +89,6 @@ export default function DesktopContextProvider({
       height: window.innerHeight,
     });
   };
-
   useEffect(() => {
     window.addEventListener("resize", setDimension);
 
@@ -78,11 +115,9 @@ export default function DesktopContextProvider({
       index: gridFragsQuantity - 1,
     },
   ]);
-
   const [selectedDesktopItem, setSelectedDesktopItem] = useState<
     DesktopItemId | ""
   >("");
-
   const [openedDesktopApps, setOpenedDesktopApps] = useState<DesktopAppType[]>(
     []
   );
@@ -97,6 +132,8 @@ export default function DesktopContextProvider({
         setSelectedDesktopItem,
         openedDesktopApps,
         setOpenedDesktopApps,
+        selectIcons,
+        dispatchSelectIcons,
       }}>
       {children}
     </DesktopContext.Provider>

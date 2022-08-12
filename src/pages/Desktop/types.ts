@@ -14,3 +14,17 @@ export type DesktopAppType = {
   icon: string;
   state: "closed" | "opened" | "maximized" | "minimized" | "unfocused";
 };
+
+// SELECT ICONS
+export type MouseCordsSelectIcons = { x: number; y: number } | null;
+export type StateSelectIcons = {
+  startPos: MouseCordsSelectIcons;
+  currentPos: MouseCordsSelectIcons;
+};
+
+export type ActionSelectIcons =
+  | {
+      type: "start_select" | "update_pos";
+      payload: MouseCordsSelectIcons;
+    }
+  | { type: "end_select" };
