@@ -5,15 +5,15 @@ import {
 } from "../../contexts/DesktopContext";
 
 export default function SelectionBox() {
-  const { selectIcons } = useContext(DesktopContext) as DesktopContextType;
+  const { desktopReducer } = useContext(DesktopContext) as DesktopContextType;
 
-  const { startPos, currentPos } = selectIcons;
+  const { startSelectPos, currentSelectPos } = desktopReducer;
 
-  if (startPos && currentPos) {
-    const coordX = Math.min(startPos.x, currentPos.x);
-    const coordY = Math.min(startPos.y, currentPos.y);
-    const width = Math.abs(startPos.x - currentPos.x);
-    const height = Math.abs(startPos.y - currentPos.y);
+  if (startSelectPos && currentSelectPos) {
+    const coordX = Math.min(startSelectPos.x, currentSelectPos.x);
+    const coordY = Math.min(startSelectPos.y, currentSelectPos.y);
+    const width = Math.abs(startSelectPos.x - currentSelectPos.x);
+    const height = Math.abs(startSelectPos.y - currentSelectPos.y);
 
     return (
       <div

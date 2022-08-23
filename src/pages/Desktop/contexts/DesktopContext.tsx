@@ -12,36 +12,36 @@ import iconCalculator from "../../../assets/images/program-icons/windows-calcula
 import iconEmptyTrash from "../../../assets/images/program-icons/empty-trash.png";
 
 import {
-  DesktopItemId,
-  DesktopItemType,
+  DesktopIconId,
+  DesktopIconType,
   DesktopAppType,
-  StateSelectIcons,
-  ActionSelectIcons,
-  MouseCordsSelectIcons,
+  DesktopReducerState,
+  DesktopReducerAction,
+  DesktopMouseCords,
 } from "../types";
 
 export type DesktopContextType = {
-  gridFragsQuantity: number;
-  desktopItems: DesktopItemType[];
-  setDesktopItems: Dispatch<SetStateAction<DesktopItemType[]>>;
-  selectedDesktopItem: DesktopItemId | "";
-  setSelectedDesktopItem: Dispatch<SetStateAction<DesktopItemId | "">>;
+  desktopBreakdowns: number;
+  desktopIcons: DesktopIconType[];
+  setDesktopIcons: Dispatch<SetStateAction<DesktopIconType[]>>;
+  draggingIcon: boolean;
+  setDraggingIcon: Dispatch<SetStateAction<boolean>>;
   openedDesktopApps: DesktopAppType[];
   setOpenedDesktopApps: Dispatch<SetStateAction<DesktopAppType[]>>;
-  selectIcons: StateSelectIcons;
-  dispatchSelectIcons: Dispatch<ActionSelectIcons>;
+  desktopReducer: DesktopReducerState;
+  dispatchDesktopReducer: Dispatch<DesktopReducerAction>;
 };
 
 const desktopContextDefault = {
-  gridFragsQuantity: 0,
+  desktopBreakdowns: 0,
   desktopItems: [],
   setDesktopItems: () => {},
-  selectedDesktopItem: "",
-  setSelectedDesktopItem: () => {},
+  draggingIcon: false,
+  setDraggingIcon: () => {},
   openedDesktopApps: [],
   setOpenedDesktopApps: () => {},
-  selectIcons: {},
-  dispatchSelectIcons: () => {},
+  desktopReducer: {},
+  dispatchDesktopReducer: () => {},
 };
 
 export const DesktopContext = createContext<DesktopContextType>(
@@ -54,41 +54,20 @@ export default function DesktopContextProvider({
 }: {
   children: ReactNode;
 }) {
-  const initialStateSelectIcons = {
-    startPos: null as MouseCordsSelectIcons,
-    currentPos: null as MouseCordsSelectIcons,
-  };
-  function reducerSelectIcons(
-    state: StateSelectIcons,
-    action: ActionSelectIcons
-  ) {
-    switch (action.type) {
-      case "start_select":
-        return { ...state, startPos: action.payload };
-      case "update_pos":
-        return { ...state, currentPos: action.payload };
-      case "end_select":
-        return initialStateSelectIcons;
-
-      default:
-        throw new Error(`Unknown action type`);
-    }
-  }
-  const [selectIcons, dispatchSelectIcons] = useReducer(
-    reducerSelectIcons,
-    initialStateSelectIcons
-  );
+  // Size and number of divisions of screen
 
   const [screenSize, setScreeSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
+
   const setDimension = () => {
     setScreeSize({
       width: window.innerWidth,
       height: window.innerHeight,
     });
   };
+
   useEffect(() => {
     window.addEventListener("resize", setDimension);
 
@@ -97,11 +76,13 @@ export default function DesktopContextProvider({
     };
   }, [screenSize]);
 
-  const gridFragsQuantity =
+  const desktopBreakdowns =
     Math.floor(screenSize.width / 80) *
     Math.floor((screenSize.height - 31) / 80);
 
-  const [desktopItems, setDesktopItems] = useState<DesktopItemType[]>([
+  // States of icons and apps
+
+  const [desktopIcons, setDesktopIcons] = useState<DesktopIconType[]>([
     {
       id: "calculator",
       title: "Calculadora",
@@ -112,28 +93,77 @@ export default function DesktopContextProvider({
       id: "trash",
       title: "Lixeira",
       icon: iconEmptyTrash,
-      index: gridFragsQuantity - 1,
+      index: desktopBreakdowns - 1,
     },
   ]);
-  const [selectedDesktopItem, setSelectedDesktopItem] = useState<
-    DesktopItemId | ""
-  >("");
+
+  const [draggingIcon, setDraggingIcon] = useState(false);
+
   const [openedDesktopApps, setOpenedDesktopApps] = useState<DesktopAppType[]>(
     []
+  );
+
+  // Reducer
+
+  const initialStateDesktopReducer = {
+    selectedIcons: [] as DesktopIconId[],
+    startSelectPos: null as DesktopMouseCords,
+    currentSelectPos: null as DesktopMouseCords,
+  };
+
+  function reducerDesktop(
+    state: DesktopReducerState,
+    action: DesktopReducerAction
+  ) {
+    switch (action.type) {
+      case "add_selected_icon":
+        return {
+          ...state,
+          selectedIcons: state.currentSelectPos
+            ? [...state.selectedIcons, action.payload]
+            : [action.payload],
+        };
+      case "del_selected_icon":
+        return {
+          ...state,
+          selectedIcons: state.selectedIcons.filter(
+            (icon) => icon !== action.payload
+          ),
+        };
+      case "start_select":
+        return { ...state, startSelectPos: action.payload };
+      case "update_pos":
+        return { ...state, currentSelectPos: action.payload };
+      case "end_select":
+        return {
+          ...initialStateDesktopReducer,
+          selectedIcons: state.selectedIcons,
+        };
+      case "reset_selection":
+        return initialStateDesktopReducer;
+
+      default:
+        throw new Error(`Unknown action type`);
+    }
+  }
+
+  const [desktopReducer, dispatchDesktopReducer] = useReducer(
+    reducerDesktop,
+    initialStateDesktopReducer
   );
 
   return (
     <DesktopContext.Provider
       value={{
-        gridFragsQuantity,
-        desktopItems,
-        setDesktopItems,
-        selectedDesktopItem,
-        setSelectedDesktopItem,
+        desktopBreakdowns,
+        desktopIcons,
+        setDesktopIcons,
+        draggingIcon,
+        setDraggingIcon,
         openedDesktopApps,
         setOpenedDesktopApps,
-        selectIcons,
-        dispatchSelectIcons,
+        desktopReducer,
+        dispatchDesktopReducer,
       }}>
       {children}
     </DesktopContext.Provider>

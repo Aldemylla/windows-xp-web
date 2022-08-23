@@ -1,75 +1,66 @@
-import { RefObject, useState, useEffect, useContext } from "react";
+import { RefObject, useState, useEffect, useContext, useCallback } from "react";
 import { DesktopContext, DesktopContextType } from "../contexts/DesktopContext";
 
-//TODO: Refactor this hook
-
-export interface State {
-  docX: number;
-  docY: number;
-  posX: number;
-  posY: number;
-  elX: number;
-  elY: number;
-  elH: number;
-  elW: number;
+export interface MouseCoords {
+  x: number;
+  y: number;
 }
 
-const useMouse = (ref: RefObject<Element>): State => {
-  const { dispatchSelectIcons } = useContext(
+const useMouse = (ref: RefObject<Element>): MouseCoords => {
+  const { dispatchDesktopReducer } = useContext(
     DesktopContext
   ) as DesktopContextType;
 
-  const [state, setState] = useState<State>({
-    docX: 0,
-    docY: 0,
-    posX: 0,
-    posY: 0,
-    elX: 0,
-    elY: 0,
-    elH: 0,
-    elW: 0,
+  const [mouseCoords, setMouseCoords] = useState<MouseCoords>({
+    x: 0,
+    y: 0,
   });
 
-  useEffect(() => {
-    const moveHandler = (event: MouseEvent) => {
-      if (ref && ref.current) {
-        const {
-          left,
-          top,
-          width: elW,
-          height: elH,
-        } = ref.current.getBoundingClientRect();
-        const posX = left + window.pageXOffset;
-        const posY = top + window.pageYOffset;
-        const elX = event.pageX - posX;
-        const elY = event.pageY - posY;
+  let selecting = false;
 
-        setState({
-          docX: event.pageX,
-          docY: event.pageY,
-          posX,
-          posY,
-          elX,
-          elY,
-          elH,
-          elW,
+  const handleMouseDown = () => {
+    selecting = true;
+  };
+
+  const handleMouseUp = () => {
+    selecting = false;
+  };
+
+  const handleMouseMove = useCallback(
+    (event: MouseEvent) => {
+      if (ref) {
+        setMouseCoords({
+          x: event.pageX,
+          y: event.pageY,
         });
 
-        dispatchSelectIcons({
-          type: "update_pos",
-          payload: { x: event.pageX, y: event.pageY },
-        });
+        if (selecting) {
+          dispatchDesktopReducer({
+            type: "update_pos",
+            payload: { x: event.pageX, y: event.pageY },
+          });
+        }
       }
-    };
+      return;
+    },
+    [ref]
+  );
 
-    document.addEventListener("mousemove", moveHandler);
+  useEffect(() => {
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("dragend", handleMouseUp);
 
     return () => {
-      document.addEventListener("mousemove", moveHandler);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mousedown", handleMouseDown);
+      window.addEventListener("mouseup", handleMouseUp);
+      window.addEventListener("dragend", handleMouseUp);
     };
-  }, [ref]);
+  }, []);
 
-  return state;
+  return mouseCoords;
 };
 
 export default useMouse;

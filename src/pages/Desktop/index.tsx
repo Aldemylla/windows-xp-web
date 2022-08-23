@@ -14,21 +14,21 @@ import useMouse from "./hooks/useMouse";
 import "./style.scss";
 
 function DesktopContainer() {
-  const { gridFragsQuantity, openedDesktopApps, dispatchSelectIcons } =
+  const { desktopBreakdowns, openedDesktopApps, dispatchDesktopReducer } =
     useContext(DesktopContext) as DesktopContextType;
 
   const ref = useRef(null);
   const mouse = useMouse(ref);
 
   function startSelection() {
-    dispatchSelectIcons({
+    dispatchDesktopReducer({
       type: "start_select",
-      payload: { x: mouse.docX, y: mouse.docY },
+      payload: { x: mouse.x, y: mouse.y },
     });
   }
 
   function endSelection() {
-    dispatchSelectIcons({ type: "end_select" });
+    dispatchDesktopReducer({ type: "end_select" });
   }
 
   return (
@@ -39,7 +39,7 @@ function DesktopContainer() {
         onMouseDown={startSelection}
         onMouseUp={endSelection}>
         <SelectionBox />
-        {[...Array(gridFragsQuantity)].map((deskGridFrag, index) => (
+        {[...Array(desktopBreakdowns)].map((deskGridFrag, index) => (
           <DesktopGridFrag key={index} gridIndex={index} />
         ))}
         {openedDesktopApps.map((app, index) => (

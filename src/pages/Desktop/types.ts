@@ -1,30 +1,32 @@
-export type DesktopItemId = "calculator" | "trash";
-export type DesktopItemTitle = "Calculadora" | "Lixeira";
+export type DesktopIconId = "calculator" | "trash";
+export type DesktopIconTitle = "Calculadora" | "Lixeira";
 
-export type DesktopItemType = {
-  id: DesktopItemId;
-  title: DesktopItemTitle;
+export type DesktopIconType = {
+  id: DesktopIconId;
+  title: DesktopIconTitle;
   icon: string;
   index: number;
 };
 
 export type DesktopAppType = {
-  id: DesktopItemId;
-  title: DesktopItemTitle;
+  id: DesktopIconId;
+  title: DesktopIconTitle;
   icon: string;
   state: "closed" | "opened" | "maximized" | "minimized" | "unfocused";
 };
 
 // SELECT ICONS
-export type MouseCordsSelectIcons = { x: number; y: number } | null;
-export type StateSelectIcons = {
-  startPos: MouseCordsSelectIcons;
-  currentPos: MouseCordsSelectIcons;
+export type DesktopMouseCords = { x: number; y: number } | null;
+export type DesktopReducerState = {
+  selectedIcons: DesktopIconId[];
+  startSelectPos: DesktopMouseCords;
+  currentSelectPos: DesktopMouseCords;
 };
 
-export type ActionSelectIcons =
+export type DesktopReducerAction =
+  | { type: "add_selected_icon" | "del_selected_icon"; payload: DesktopIconId }
   | {
       type: "start_select" | "update_pos";
-      payload: MouseCordsSelectIcons;
+      payload: DesktopMouseCords;
     }
-  | { type: "end_select" };
+  | { type: "end_select" | "reset_selection" };

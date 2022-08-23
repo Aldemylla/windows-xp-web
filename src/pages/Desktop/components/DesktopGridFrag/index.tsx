@@ -2,11 +2,12 @@ import { DragEvent, useContext, useEffect, useRef, useState } from "react";
 
 import DesktopItem from "../DesktopItem";
 
-import { DesktopItemType } from "../../types";
 import {
   DesktopContext,
   DesktopContextType,
 } from "../../contexts/DesktopContext";
+
+import { DesktopIconId, DesktopIconType } from "../../types";
 
 type DesktopGridFragProps = {
   gridIndex: number;
@@ -14,42 +15,41 @@ type DesktopGridFragProps = {
 
 export default function DesktopGridFrag({ gridIndex }: DesktopGridFragProps) {
   const {
-    desktopItems,
-    setDesktopItems,
-    selectedDesktopItem,
-    setSelectedDesktopItem,
+    setDraggingIcon,
+    desktopIcons,
+    setDesktopIcons,
+    desktopReducer,
+    dispatchDesktopReducer,
   } = useContext(DesktopContext) as DesktopContextType;
 
   function allowDrop(ev: DragEvent<HTMLDivElement>) {
     ev.preventDefault();
   }
 
-  const [objectDesktopItem, setObjectDesktopItem] = useState<DesktopItemType>();
+  const [objectDesktopItem, setObjectDesktopItem] = useState<DesktopIconType>();
 
   useEffect(() => {
-    setObjectDesktopItem(desktopItems.find((item) => item.index === gridIndex));
-  }, [desktopItems]);
+    setObjectDesktopItem(desktopIcons.find((item) => item.index === gridIndex));
+  }, [desktopIcons]);
 
   const dragItem = useRef<HTMLDivElement>(null);
 
   function drop(ev: DragEvent<HTMLDivElement>) {
     ev.preventDefault();
 
-    const draggableId = ev.dataTransfer.getData("text") as
-      | "calculator"
-      | "trash";
+    const draggableId = ev.dataTransfer.getData("text") as DesktopIconId;
 
-    const dragItemObj = desktopItems.filter(
+    const dragItemObj = desktopIcons.filter(
       (item) => item.id === draggableId
     )[0];
 
     if (!objectDesktopItem && !!dragItemObj) {
-      const newDesktopItems = desktopItems.filter(
+      const newDesktopIcons = desktopIcons.filter(
         (item) => item.id !== draggableId
       );
 
-      setDesktopItems([
-        ...newDesktopItems,
+      setDesktopIcons([
+        ...newDesktopIcons,
         {
           id: draggableId,
           title: dragItemObj.title,
@@ -59,11 +59,15 @@ export default function DesktopGridFrag({ gridIndex }: DesktopGridFragProps) {
       ]);
     }
 
+    setDraggingIcon(false);
+    dispatchDesktopReducer({ type: "end_select" });
     ev.dataTransfer.clearData();
   }
 
-  function selectItemHandler() {
-    setSelectedDesktopItem(objectDesktopItem?.id || "");
+  function resetSelection() {
+    if (!objectDesktopItem) {
+      dispatchDesktopReducer({ type: "reset_selection" });
+    }
   }
 
   return (
@@ -73,11 +77,11 @@ export default function DesktopGridFrag({ gridIndex }: DesktopGridFragProps) {
       ref={dragItem}
       onDrop={drop}
       onDragOver={allowDrop}
-      onClick={selectItemHandler}>
+      onClick={resetSelection}>
       {objectDesktopItem && (
         <DesktopItem
           item={objectDesktopItem}
-          selected={selectedDesktopItem === objectDesktopItem.id}
+          selected={desktopReducer.selectedIcons.includes(objectDesktopItem.id)}
         />
       )}
     </div>
