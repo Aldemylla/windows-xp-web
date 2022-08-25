@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+
+import logoWindows from "../../../../assets/images/w-logo.png";
+
 import "./style.scss";
 
 export default function DesktopTaskbar() {
@@ -21,7 +24,7 @@ export default function DesktopTaskbar() {
     <div className='taskbar'>
       <section className='taskbar__programs'>
         <button className='taskbar__programs__start'>
-          <img src='./src/assets/images/w-logo.png' alt='' />
+          <img src={logoWindows} alt='Logo do Windows XP' />
           <span>Iniciar</span>
         </button>
       </section>
