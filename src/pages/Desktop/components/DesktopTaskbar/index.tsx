@@ -18,14 +18,14 @@ export default function DesktopTaskbar() {
   }, []);
 
   return (
-    <div className="taskbar">
-      <section className="taskbar__programs">
-        <button className="taskbar__programs__start">
-          <img src="./src/assets/images/w-logo.png" alt="" />
-          <span>start</span>
+    <div className='taskbar'>
+      <section className='taskbar__programs'>
+        <button className='taskbar__programs__start'>
+          <img src='./src/assets/images/w-logo.png' alt='' />
+          <span>Iniciar</span>
         </button>
       </section>
-      <section className="taskbar__tools">
+      <section className='taskbar__tools'>
         <button></button>
         <button></button>
         <button></button>
