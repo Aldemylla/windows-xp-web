@@ -30,6 +30,8 @@ export type DesktopContextType = {
   setOpenedDesktopApps: Dispatch<SetStateAction<DesktopAppType[]>>;
   desktopReducer: DesktopReducerState;
   dispatchDesktopReducer: Dispatch<DesktopReducerAction>;
+  focusedApp: string;
+  setFocusedApp: Dispatch<SetStateAction<string>>;
 };
 
 const desktopContextDefault = {
@@ -42,6 +44,8 @@ const desktopContextDefault = {
   setOpenedDesktopApps: () => {},
   desktopReducer: {},
   dispatchDesktopReducer: () => {},
+  focusedApp: "",
+  setFocusedApp: () => {},
 };
 
 export const DesktopContext = createContext<DesktopContextType>(
@@ -102,6 +106,7 @@ export default function DesktopContextProvider({
   const [openedDesktopApps, setOpenedDesktopApps] = useState<DesktopAppType[]>(
     []
   );
+  const [focusedApp, setFocusedApp] = useState("");
 
   // Reducer
 
@@ -164,6 +169,8 @@ export default function DesktopContextProvider({
         setOpenedDesktopApps,
         desktopReducer,
         dispatchDesktopReducer,
+        focusedApp,
+        setFocusedApp,
       }}>
       {children}
     </DesktopContext.Provider>

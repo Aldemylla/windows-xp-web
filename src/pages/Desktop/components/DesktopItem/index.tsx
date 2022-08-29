@@ -22,6 +22,7 @@ export default function DesktopItem({
     setDraggingIcon,
     openedDesktopApps,
     setOpenedDesktopApps,
+    setFocusedApp,
     desktopReducer,
     dispatchDesktopReducer,
   } = useContext(DesktopContext);
@@ -39,10 +40,11 @@ export default function DesktopItem({
       id: item.id,
       title: item.title,
       icon: item.icon,
-      state: "opened",
+      state: "default",
       appId: `${Date.now()}`,
     };
     setOpenedDesktopApps([...openedDesktopApps, newItem]);
+    setFocusedApp(newItem.appId);
   }
 
   useEffect(() => {

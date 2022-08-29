@@ -64,9 +64,19 @@
       letter-spacing: 0.02rem;
 
       border-radius: 2px;
-      background-color: #3c81f3;
+      background: #3c81f3;
       box-shadow: rgb(0 0 0 / 30%) -1px 0px inset,
         rgb(255 255 255 / 20%) 1px 1px 1px inset;
+
+      &.focused {
+        background: #1a50b8;
+        box-shadow: rgb(0 0 0 / 30%) -1px 0px inset,
+          rgb(0 0 0 / 20%) 0px 0px 2px 2px inset;
+      }
+
+      &:hover {
+        filter: brightness(1.14);
+      }
 
       &:last-of-type {
         margin-right: 0.6rem;

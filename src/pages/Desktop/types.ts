@@ -13,7 +13,7 @@ export type DesktopAppType = {
   title: DesktopIconTitle;
   icon: string;
   appId: string;
-  state: "closed" | "opened" | "maximized" | "minimized" | "unfocused";
+  state: "default" | "maximized" | "minimized";
 };
 
 // SELECT ICONS

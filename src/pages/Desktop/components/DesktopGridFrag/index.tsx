@@ -20,6 +20,7 @@ export default function DesktopGridFrag({ gridIndex }: DesktopGridFragProps) {
     setDesktopIcons,
     desktopReducer,
     dispatchDesktopReducer,
+    setFocusedApp,
   } = useContext(DesktopContext) as DesktopContextType;
 
   function allowDrop(ev: DragEvent<HTMLDivElement>) {
@@ -69,6 +70,7 @@ export default function DesktopGridFrag({ gridIndex }: DesktopGridFragProps) {
   function resetSelection() {
     if (!objectDesktopItem) {
       dispatchDesktopReducer({ type: "reset_selection" });
+      setFocusedApp("");
     }
   }
 

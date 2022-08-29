@@ -16,7 +16,7 @@ type DesktopAppProps = {
 };
 
 export default function DesktopApp({ app }: DesktopAppProps) {
-  const { openedDesktopApps, setOpenedDesktopApps } =
+  const { openedDesktopApps, setOpenedDesktopApps, focusedApp, setFocusedApp } =
     useContext(DesktopContext);
 
   function closeApp(event: MouseEvent<HTMLButtonElement>) {
@@ -42,7 +42,8 @@ export default function DesktopApp({ app }: DesktopAppProps) {
       minHeight='31'
       bounds='parent'
       cancel='.no-drag'
-      className='desktop__app'>
+      className={`desktop__app ${focusedApp === app.appId ? "focused" : ""}`}
+      onMouseDown={() => setFocusedApp(app.appId)}>
       <header>
         <div className='title__container'>
           <img src={app.icon} alt='' />

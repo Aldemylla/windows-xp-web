@@ -6,7 +6,8 @@ import { DesktopContext } from "../../contexts/DesktopContext";
 import "./style.scss";
 
 export default function DesktopTaskbar() {
-  const { openedDesktopApps } = useContext(DesktopContext);
+  const { openedDesktopApps, focusedApp, setFocusedApp } =
+    useContext(DesktopContext);
   const [currentyTime, setCurrentyTime] = useState(getCorrectlyTime());
 
   function getCorrectlyTime() {
@@ -30,7 +31,13 @@ export default function DesktopTaskbar() {
           <span>Iniciar</span>
         </button>
         {openedDesktopApps.map((openedApp, index) => (
-          <button key={index} className='taskbar__apps__app'>
+          <button
+            key={index}
+            className={`taskbar__apps__app ${
+              focusedApp === openedApp.appId ? "focused" : ""
+            }`}
+            title={openedApp.title}
+            onMouseDown={() => setFocusedApp(openedApp.appId)}>
             <img src={openedApp.icon} alt={openedApp.title} />
             {openedApp.title}
           </button>
