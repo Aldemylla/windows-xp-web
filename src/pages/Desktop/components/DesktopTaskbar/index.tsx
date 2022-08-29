@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import logoWindows from "../../../../assets/images/w-logo.png";
+import { DesktopContext } from "../../contexts/DesktopContext";
 
 import "./style.scss";
 
 export default function DesktopTaskbar() {
+  const { openedDesktopApps } = useContext(DesktopContext);
   const [currentyTime, setCurrentyTime] = useState(getCorrectlyTime());
 
   function getCorrectlyTime() {
@@ -22,11 +24,17 @@ export default function DesktopTaskbar() {
 
   return (
     <div className='taskbar'>
-      <section className='taskbar__programs'>
-        <button className='taskbar__programs__start'>
+      <section className='taskbar__apps'>
+        <button className='taskbar__apps__start'>
           <img src={logoWindows} alt='Logo do Windows XP' />
           <span>Iniciar</span>
         </button>
+        {openedDesktopApps.map((openedApp, index) => (
+          <button key={index} className='taskbar__apps__app'>
+            <img src={openedApp.icon} alt={openedApp.title} />
+            {openedApp.title}
+          </button>
+        ))}
       </section>
       <section className='taskbar__tools'>
         <button></button>

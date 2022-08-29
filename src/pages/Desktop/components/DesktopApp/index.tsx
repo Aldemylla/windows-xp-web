@@ -24,7 +24,7 @@ export default function DesktopApp({ app }: DesktopAppProps) {
     event.stopPropagation();
 
     const newOpenedDesktopApps = openedDesktopApps.filter(
-      (openedApp) => openedApp.id !== app.id
+      (openedApp) => openedApp.appId !== app.appId
     );
 
     setOpenedDesktopApps([...newOpenedDesktopApps]);

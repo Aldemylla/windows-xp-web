@@ -29,7 +29,9 @@ export default function DesktopGridFrag({ gridIndex }: DesktopGridFragProps) {
   const [objectDesktopItem, setObjectDesktopItem] = useState<DesktopIconType>();
 
   useEffect(() => {
-    setObjectDesktopItem(desktopIcons.find((item) => item.index === gridIndex));
+    setObjectDesktopItem(
+      desktopIcons.find((item) => item.iconIndex === gridIndex)
+    );
   }, [desktopIcons]);
 
   const dragItem = useRef<HTMLDivElement>(null);
@@ -54,7 +56,7 @@ export default function DesktopGridFrag({ gridIndex }: DesktopGridFragProps) {
           id: draggableId,
           title: dragItemObj.title,
           icon: dragItemObj.icon,
-          index: gridIndex,
+          iconIndex: gridIndex,
         },
       ]);
     }

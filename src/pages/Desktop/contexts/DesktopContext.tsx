@@ -87,13 +87,13 @@ export default function DesktopContextProvider({
       id: "calculator",
       title: "Calculadora",
       icon: iconCalculator,
-      index: 0,
+      iconIndex: 0,
     },
     {
       id: "trash",
       title: "Lixeira",
       icon: iconEmptyTrash,
-      index: desktopBreakdowns - 1,
+      iconIndex: desktopBreakdowns - 1,
     },
   ]);
 

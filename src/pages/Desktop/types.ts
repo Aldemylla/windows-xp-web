@@ -5,13 +5,14 @@ export type DesktopIconType = {
   id: DesktopIconId;
   title: DesktopIconTitle;
   icon: string;
-  index: number;
+  iconIndex: number;
 };
 
 export type DesktopAppType = {
   id: DesktopIconId;
   title: DesktopIconTitle;
   icon: string;
+  appId: string;
   state: "closed" | "opened" | "maximized" | "minimized" | "unfocused";
 };
 

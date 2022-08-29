@@ -40,6 +40,7 @@ export default function DesktopItem({
       title: item.title,
       icon: item.icon,
       state: "opened",
+      appId: `${Date.now()}`,
     };
     setOpenedDesktopApps([...openedDesktopApps, newItem]);
   }
