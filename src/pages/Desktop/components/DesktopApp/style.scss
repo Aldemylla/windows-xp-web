@@ -75,6 +75,7 @@
   }
 
   &.focused {
+    z-index: 99999;
     header {
       background: #0055e5;
       box-shadow: inset -2px 0px 3px #001590, inset 1px 0px 2px #0028c4,
@@ -94,5 +95,9 @@
       border: 1px solid;
       box-shadow: inset 2px 0px 0px #0732d9, inset -2px -2px 2px #00138c;
     }
+  }
+
+  &.transitions {
+    transition: all cubic-bezier(1, 0, 0, 1) 0.35s;
   }
 }

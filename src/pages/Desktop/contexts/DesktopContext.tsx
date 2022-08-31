@@ -18,9 +18,11 @@ import {
   DesktopReducerState,
   DesktopReducerAction,
   DesktopMouseCords,
+  ScreenSize,
 } from "../types";
 
 export type DesktopContextType = {
+  screenSize: ScreenSize;
   desktopBreakdowns: number;
   desktopIcons: DesktopIconType[];
   setDesktopIcons: Dispatch<SetStateAction<DesktopIconType[]>>;
@@ -35,6 +37,7 @@ export type DesktopContextType = {
 };
 
 const desktopContextDefault = {
+  screenSize: {},
   desktopBreakdowns: 0,
   desktopItems: [],
   setDesktopItems: () => {},
@@ -81,8 +84,8 @@ export default function DesktopContextProvider({
   }, [screenSize]);
 
   const desktopBreakdowns =
-    Math.floor(screenSize.width / 80) *
-    Math.floor((screenSize.height - 31) / 80);
+    Math.floor(screenSize.width / 80) * // 80: Breakdown width
+    Math.floor((screenSize.height - 31) / 80); // 31: Taskbar height; 80 = Breakdown height
 
   // States of icons and apps
 
@@ -160,6 +163,7 @@ export default function DesktopContextProvider({
   return (
     <DesktopContext.Provider
       value={{
+        screenSize,
         desktopBreakdowns,
         desktopIcons,
         setDesktopIcons,
