@@ -27,19 +27,19 @@ export default function DesktopApp({ app }: { app: DesktopAppType }) {
     setFocusedApp,
   } = useContext(DesktopContext);
 
-  const windowRef = useRef() as RefObject<Window>;
-
   const defaultWindow = {
     x: 0,
     y: 0,
     width: 320,
     height: 300,
   };
-
   const windowMaxSize = {
     width: `${screenSize.width - 1}px`, // 1: Window right border
     height: `${screenSize.height - 31}px`, // 31: Taskbar height;
   };
+
+  const windowRef = useRef() as RefObject<Window>;
+
   const [sizeBeforeMaximize, setSizeBeforeMaximize] = useState({
     width: `${defaultWindow.width}px`,
     height: `${defaultWindow.height}px`,
@@ -119,8 +119,7 @@ export default function DesktopApp({ app }: { app: DesktopAppType }) {
     const newOpenedDesktopApps = openedDesktopApps.filter(
       (openedApp) => openedApp.appId !== app.appId
     );
-
-    setOpenedDesktopApps([...newOpenedDesktopApps]);
+    setOpenedDesktopApps(newOpenedDesktopApps);
   }
 
   return (

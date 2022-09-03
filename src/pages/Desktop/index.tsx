@@ -42,8 +42,8 @@ function DesktopContainer() {
         {[...Array(desktopBreakdowns)].map((deskGridFrag, index) => (
           <DesktopGridFrag key={index} gridIndex={index} />
         ))}
-        {openedDesktopApps.map((app, index) => (
-          <DesktopApp key={index} app={app} />
+        {openedDesktopApps.map((app) => (
+          <DesktopApp key={app.appId} app={app} />
         ))}
       </div>
       <DesktopTaskbar />
