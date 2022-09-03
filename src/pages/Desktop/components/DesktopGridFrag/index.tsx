@@ -81,7 +81,7 @@ export default function DesktopGridFrag({ gridIndex }: DesktopGridFragProps) {
       ref={dragItem}
       onDrop={drop}
       onDragOver={allowDrop}
-      onClick={resetSelection}>
+      onMouseDown={resetSelection}>
       {objectDesktopItem && (
         <DesktopItem
           item={objectDesktopItem}

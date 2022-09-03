@@ -139,7 +139,9 @@ export default function DesktopContextProvider({
           ),
         };
       case "start_select":
-        return { ...state, startSelectPos: action.payload };
+        return !focusedApp
+          ? { ...state, startSelectPos: action.payload }
+          : state;
       case "update_pos":
         return { ...state, currentSelectPos: action.payload };
       case "end_select":

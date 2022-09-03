@@ -57,6 +57,14 @@
         img {
           pointer-events: none;
         }
+
+        &:hover {
+          filter: brightness(1.2);
+
+          &:active {
+            filter: brightness(0.7);
+          }
+        }
       }
     }
   }
