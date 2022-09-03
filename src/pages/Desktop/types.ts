@@ -18,7 +18,7 @@ export type DesktopAppType = {
   title: DesktopIconTitle;
   icon: string;
   appId: string;
-  state: "default" | "maximized" | "minimized";
+  minimized: boolean;
 };
 
 // SELECT ICONS

@@ -5,6 +5,7 @@ import {
   RefObject,
   useState,
   useLayoutEffect,
+  useEffect,
 } from "react";
 import { DesktopContext } from "../../contexts/DesktopContext";
 
@@ -88,6 +89,16 @@ export default function DesktopApp({ app }: { app: DesktopAppType }) {
     }
   }
 
+  function minimizeWindow() {
+    const newOpenedDesktopApps = openedDesktopApps;
+    const appIndex = newOpenedDesktopApps.indexOf(app);
+    newOpenedDesktopApps[appIndex].minimized = true;
+
+    setOpenedDesktopApps([...newOpenedDesktopApps]);
+
+    setFocusedApp("");
+  }
+
   function resizeWindow() {
     setWindowTransitions(true);
     const windowElement = windowRef.current;
@@ -134,7 +145,7 @@ export default function DesktopApp({ app }: { app: DesktopAppType }) {
       cancel='.no-drag'
       className={`desktop__app ${focusedApp === app.appId ? "focused" : ""} ${
         windowTransitions ? "transitions" : ""
-      }`}
+      } ${app.minimized ? "minimized" : ""}`}
       onMouseDown={() => setFocusedApp(app.appId)}>
       <header>
         <div className='title__container'>
@@ -142,7 +153,7 @@ export default function DesktopApp({ app }: { app: DesktopAppType }) {
           <h1>{app.title}</h1>
         </div>
         <div className='window-handlers'>
-          <button className='minimize no-drag'>
+          <button className='minimize no-drag' onClick={minimizeWindow}>
             <img src={explorerMinimize} alt='Minimize' />
           </button>
           <button className='maximize no-drag' onClick={resizeWindow}>

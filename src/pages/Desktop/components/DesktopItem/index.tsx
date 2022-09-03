@@ -40,8 +40,8 @@ export default function DesktopItem({
       id: item.id,
       title: item.title,
       icon: item.icon,
-      state: "default",
       appId: `${Date.now()}`,
+      minimized: false,
     };
     setOpenedDesktopApps([...openedDesktopApps, newItem]);
     setFocusedApp(newItem.appId);

@@ -2,11 +2,12 @@ import { useContext, useEffect, useState } from "react";
 
 import logoWindows from "../../../../assets/images/w-logo.png";
 import { DesktopContext } from "../../contexts/DesktopContext";
+import { DesktopAppType } from "../../types";
 
 import "./style.scss";
 
 export default function DesktopTaskbar() {
-  const { openedDesktopApps, focusedApp, setFocusedApp } =
+  const { openedDesktopApps, setOpenedDesktopApps, focusedApp, setFocusedApp } =
     useContext(DesktopContext);
   const [currentyTime, setCurrentyTime] = useState(getCorrectlyTime());
 
@@ -23,6 +24,18 @@ export default function DesktopTaskbar() {
     }, 1000);
   }, []);
 
+  function focusApp(app: DesktopAppType) {
+    setFocusedApp(app.appId);
+
+    if (app.minimized) {
+      const newOpenedDesktopApps = openedDesktopApps;
+      const appIndex = newOpenedDesktopApps.indexOf(app);
+      newOpenedDesktopApps[appIndex].minimized = false;
+
+      setOpenedDesktopApps([...newOpenedDesktopApps]);
+    }
+  }
+
   return (
     <div className='taskbar'>
       <section className='taskbar__apps'>
@@ -30,16 +43,16 @@ export default function DesktopTaskbar() {
           <img src={logoWindows} alt='Logo do Windows XP' />
           <span>Iniciar</span>
         </button>
-        {openedDesktopApps.map((openedApp, index) => (
+        {openedDesktopApps.map((app, index) => (
           <button
             key={index}
             className={`taskbar__apps__app ${
-              focusedApp === openedApp.appId ? "focused" : ""
+              focusedApp === app.appId ? "focused" : ""
             }`}
-            title={openedApp.title}
-            onMouseDown={() => setFocusedApp(openedApp.appId)}>
-            <img src={openedApp.icon} alt={openedApp.title} />
-            {openedApp.title}
+            title={app.title}
+            onMouseDown={() => focusApp(app)}>
+            <img src={app.icon} alt={app.title} />
+            {app.title}
           </button>
         ))}
       </section>

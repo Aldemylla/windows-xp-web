@@ -100,4 +100,8 @@
   &.transitions {
     transition: all cubic-bezier(1, 0, 0, 1) 0.35s;
   }
+
+  &.minimized {
+    display: none !important;
+  }
 }
