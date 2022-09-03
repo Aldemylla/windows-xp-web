@@ -13,8 +13,6 @@
 
     border-radius: 8px 8px 0px 0px;
 
-    cursor: default;
-
     .title__container {
       min-width: 35%;
 
@@ -78,8 +76,6 @@
     box-shadow: inset 2px 0px 0px #758cdd, inset -2px -2px 2px #4f53bc;
 
     overflow: hidden;
-
-    cursor: default;
   }
 
   &.focused {
